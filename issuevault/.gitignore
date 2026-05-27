@@ -1,0 +1,71 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+*.swp
+
+# Build folders
+dist/
+build/
+out/
+
+# Coverage reports
+coverage/
+
+# Temporary files
+tmp/
+temp/
+
+# Parcel cache
+.cache/
+.parcel-cache/
+
+# Vite files
+vite.config.timestamp-*
+*.local
+
+# Frontend package lock files (optional)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Uploads (if using multer in Express)
+uploads/
+
+# SQLite database files (if used)
+*.sqlite
+*.sqlite3
+
+# Generated files
+*.tgz
+
+# ESLint cache
+.eslintcache
+
+# TypeScript build info (ignore if using TS later)
+*.tsbuildinfo

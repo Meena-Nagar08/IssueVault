@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IssueVault — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0f4ff;
+      --white: #ffffff;
+      --accent: #4361ee;
+      --accent2: #7209b7;
+      --accent-light: #eef0fd;
+      --success: #22c55e;
+      --error: #ef4444;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --border: #e2e8f0;
+      --font: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(67,97,238,0.12) 0%, transparent 70%);
+      top: -150px; left: -150px;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(114,9,183,0.10) 0%, transparent 70%);
+      bottom: -100px; right: -100px;
+      pointer-events: none;
+    }
+
+    .wrapper {
+      display: flex;
+      width: 100%;
+      max-width: 960px;
+      min-height: 560px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(67,97,238,0.12), 0 4px 20px rgba(0,0,0,0.06);
+      animation: slideUp 0.5s ease forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .left-panel {
+      flex: 1;
+      background: linear-gradient(145deg, #4361ee 0%, #7209b7 100%);
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      top: -80px; right: -80px;
+    }
+
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      bottom: -60px; left: -60px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-icon {
+      width: 42px; height: 42px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .left-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .left-content h1 {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .left-content p {
+      font-size: 15px;
+      line-height: 1.6;
+      opacity: 0.8;
+      margin-bottom: 32px;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    .feature-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .left-footer {
+      font-size: 13px;
+      opacity: 0.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .right-panel {
+      flex: 1;
+      background: var(--white);
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-header {
+      margin-bottom: 32px;
+    }
+
+    .form-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .form-header p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form-header a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 15px;
+      color: var(--text);
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+    input::placeholder { color: #b0b8cc; }
+
+    input:focus {
+      border-color: var(--accent);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(67,97,238,0.12);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(67,97,238,0.35);
+    }
+
+    .btn:hover {
+      opacity: 0.93;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(67,97,238,0.4);
+    }
+
+    .btn:active { transform: translateY(0); }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-loader {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .alert {
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 18px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .alert-error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+    }
+
+    .alert-success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #16a34a;
+    }
+
+    .hint {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 680px) {
+      .left-panel { display: none; }
+      .wrapper { max-width: 420px; }
+      .right-panel { padding: 36px 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <div class="left-panel">
+      <div class="brand">
+        <div class="brand-icon">🏠</div>
+        <div class="brand-name">IssueVault</div>
+      </div>
+
+      <div class="left-content">
+        <h1>Raise it.<br/>Resolve it.</br>Verify it.</h1>
+        <p>Submit complaints, track their status, and get issues resolved — all in one place.</p>
+        <div class="features">
+          <div class="feature-item">
+            <div class="feature-dot">✓</div>
+            Submit complaints instantly
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot">✓</div>
+            Track status in real time
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot">✓</div>
+            Admin resolves issues fast
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot">✓</div>
+            Secure Hostel ID login
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot">✓</div>
+            Student verifies the issue has solved or not
+          </div>
+        </div>
+      </div>
+
+      <div class="left-footer">© 2026 IssueVault</div>
+    </div>
+
+    <div class="right-panel">
+      <div class="form-header">
+        <h2>Welcome back👋</h2>
+        <p>New here? <a href="register.html">Create an account</a></p>
+      </div>
+
+      <div class="alert alert-error" id="errorAlert"></div>
+      <div class="alert alert-success" id="successAlert"></div>
+
+      <div class="form-group">
+        <label>Hostel ID</label>
+        <input type="text" id="hostelId" placeholder="e.g. 2022BCS001 or ADMIN001"/>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter your password"/>
+      </div>
+
+      <button class="btn" id="loginBtn" onclick="handleLogin()">
+        <span id="btnText">Login to IssueVault</span>
+        <div class="btn-loader" id="btnLoader"></div>
+      </button>
+
+      <div class="hint">Admin? Use your Staff ID to login.</div>
+    </div>
+  </div>
+
+  <script>
+    // LOGIN FUNCTION
+    // This runs when user clicks the Login button
+    async function handleLogin() {
+      //Get values from input fields
+      const hostelId = document.getElementById('hostelId').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      //Get UI elements
+      const btn = document.getElementById('loginBtn');
+      const btnText = document.getElementById('btnText');
+      const btnLoader = document.getElementById('btnLoader');
+      const errorAlert = document.getElementById('errorAlert');
+      const successAlert = document.getElementById('successAlert');
+
+      errorAlert.style.display = 'none';
+      successAlert.style.display = 'none';
+
+      //Validate — don't send empty fields
+      if (!hostelId || !password) {
+        errorAlert.textContent = 'Please fill in all fields.';
+        errorAlert.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoader.style.display = 'block';
+
+      try {
+        //Call your backend login API
+        const response = await fetch('http://localhost:5000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ hostelId, password })
+        });
+
+        //Read the response as JSON
+        const data = await response.json();
+
+        //If error (wrong password etc.)
+        if (!response.ok) {
+          throw new Error(data.message || 'Login failed');
+        }
+
+        //Save token and role to localStorage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
+        localStorage.setItem('hostelId', hostelId);
+
+        //Show success message
+        successAlert.textContent = 'Login successful! Redirecting...';
+        successAlert.style.display = 'block';
+
+        //Redirect based on role
+        setTimeout(() => {
+          if (data.role === 'admin') {
+            window.location.href = 'admin.html';
+          } else {
+            window.location.href = 'student.html';
+          }
+        }, 1000);
+
+      } catch (error) {
+        errorAlert.textContent = error.message;
+        errorAlert.style.display = 'block';
+
+        btn.disabled = false;
+        btnText.style.display = 'block';
+        btnLoader.style.display = 'none';
+      }
+    }
+
+    // Allow pressing Enter key to login
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+  </script>
+</body>
+</html>

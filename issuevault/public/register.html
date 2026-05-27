@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IssueVault — Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f0f4ff;
+      --white: #ffffff;
+      --accent: #4361ee;
+      --accent2: #7209b7;
+      --success: #22c55e;
+      --error: #ef4444;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --border: #e2e8f0;
+      --font: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(67,97,238,0.12) 0%, transparent 70%);
+      top: -150px; right: -150px;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(114,9,183,0.10) 0%, transparent 70%);
+      bottom: -100px; left: -100px;
+      pointer-events: none;
+    }
+
+    .wrapper {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 20px 60px rgba(67,97,238,0.12), 0 4px 20px rgba(0,0,0,0.06);
+      animation: slideUp 0.5s ease forwards;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .brand-icon {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    .form-header {
+      margin-bottom: 28px;
+    }
+
+    .form-header h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    .form-header p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form-header a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+
+    input, select {
+      width: 100%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 15px;
+      color: var(--text);
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      appearance: none;
+    }
+
+    input::placeholder { color: #b0b8cc; }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(67,97,238,0.12);
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '▾';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(67,97,238,0.35);
+    }
+
+    .btn:hover {
+      opacity: 0.93;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(67,97,238,0.4);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-loader {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .alert {
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 18px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .alert-error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+    }
+
+    .alert-success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #16a34a;
+    }
+
+    .hint {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <div class="brand">
+      <div class="brand-icon">🏠</div>
+      <div class="brand-name">IssueVault</div>
+    </div>
+
+    <div class="form-header">
+      <h2>Create account ✨</h2>
+      <p>Already registered? <a href="login.html">Login here</a></p>
+    </div>
+
+    <div class="alert alert-error" id="errorAlert"></div>
+    <div class="alert alert-success" id="successAlert"></div>
+
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="name" placeholder="e.g. Meena Nagar"/>
+    </div>
+
+    <div class="form-group">
+      <label>Hostel ID</label>
+      <input type="text" id="hostelId" placeholder="e.g. 2022BCS001"/>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Create a password"/>
+    </div>
+
+    <div class="form-group">
+      <label>Role</label>
+      <div class="select-wrapper">
+        <select id="role">
+          <option value="student">Student</option>
+          <option value="admin">Admin / Authority</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn" id="registerBtn" onclick="handleRegister()">
+      <span id="btnText">Create Account</span>
+      <div class="btn-loader" id="btnLoader"></div>
+    </button>
+
+    <div class="hint">By registering, you agree to use this for hostel purposes only.</div>
+  </div>
+
+  <script>
+    async function handleRegister() {
+      //Get all field values
+      const name = document.getElementById('name').value.trim();
+      const hostelId = document.getElementById('hostelId').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const role = document.getElementById('role').value;
+
+      const btn = document.getElementById('registerBtn');
+      const btnText = document.getElementById('btnText');
+      const btnLoader = document.getElementById('btnLoader');
+      const errorAlert = document.getElementById('errorAlert');
+      const successAlert = document.getElementById('successAlert');
+
+      errorAlert.style.display = 'none';
+      successAlert.style.display = 'none';
+
+      //Validate
+      if (!name || !hostelId || !password) {
+        errorAlert.textContent = 'Please fill in all fields.';
+        errorAlert.style.display = 'block';
+        return;
+      }
+
+      if (password.length < 6) {
+        errorAlert.textContent = 'Password must be at least 6 characters.';
+        errorAlert.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      btnLoader.style.display = 'block';
+
+      try {
+        //Call register API
+        const response = await fetch('http://localhost:5000/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, hostelId, password, role })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Registration failed');
+        }
+
+        //Success — redirect to login
+        successAlert.textContent = 'Account created! Redirecting to login...';
+        successAlert.style.display = 'block';
+
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+
+      } catch (error) {
+        errorAlert.textContent = error.message;
+        errorAlert.style.display = 'block';
+        btn.disabled = false;
+        btnText.style.display = 'block';
+        btnLoader.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleRegister();
+    });
+  </script>
+</body>
+</html>
